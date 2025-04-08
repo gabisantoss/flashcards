@@ -2,7 +2,7 @@ export default function Home() {
   return (
     <main className="m-auto flex min-h-lvh items-center h-full justify-center w-full p-4">
       <div className="flex flex-col items-center justify-center">
-        <h1 className="text-8xl text-secondary font-bold text-center cursor-default">
+        <h1 className="text-8xl text-secondary text-center cursor-default">
           Flashcards
         </h1>
         <p className="text-2xl font-bold text-center cursor-default">
