@@ -1,11 +1,56 @@
-from infrastructure.models import User
-from infrastructure.models import UserFlashcard
-from infrastructure.repositories.base import BaseRepository
+from sqlalchemy.orm import aliased
+from sqlalchemy import func
+from sqlalchemy.orm import Session
+
+from werkzeug.security import generate_password_hash
+
+from ..db import SessionLocal
+from ..models import User, Flashcard
+from ..models import UserFlashcard
 
 
-class UserRepository(BaseRepository):
+class UserRepository:
     def __init__(self):
-        super().__init__(User)
+        self.db: Session = SessionLocal()
+
+    def get_all(self):
+        return self.db.query(User).all()
+
+    def get_by_id(self, user_id: int):
+        db_user = self.db.query(User).filter_by(id=user_id).first()
+
+        user_flashcard_alias = aliased(UserFlashcard)
+
+        flashcards_with_status = self.db.query(
+            Flashcard.id,
+            Flashcard.question,
+            Flashcard.answer,
+            func.coalesce(user_flashcard_alias.status,
+                          "TO_STUDY").label('status')
+        ).outerjoin(
+            user_flashcard_alias,
+            (user_flashcard_alias.flashcard_id == Flashcard.id) &
+            (user_flashcard_alias.user_id == user_id)
+        ).all()
+
+        user = db_user.to_dict()
+
+        user_flashcards = []
+
+        for flashcard in flashcards_with_status:
+            user_flashcards.append(flashcard._asdict())
+
+        user['flashcards'] = user_flashcards
+
+        return user
+
+    def add(self, username: str, password: str, email: str):
+        password_hash = generate_password_hash(password)
+        record = User(username=username, password=password_hash, email=email)
+        self.db.add(record)
+        self.db.commit()
+        self.db.refresh(record)
+        return record
 
     def get_by_email(self, email):
         return self.db.query(User).filter_by(email=email).first()
@@ -17,5 +62,11 @@ class UserRepository(BaseRepository):
         if user_flashcard:
             user_flashcard.status = status
             self.db.commit()
+        else:
+            user_flashcard = UserFlashcard(
+                user_id=user_id, flashcard_id=flashcard_id, status=status)
+            self.db.add(user_flashcard)
+            self.db.commit()
+            self.db.refresh(user_flashcard)
 
         return user_flashcard
