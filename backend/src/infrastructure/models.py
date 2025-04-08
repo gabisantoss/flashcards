@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, String, Enum, ForeignKey
 from sqlalchemy.orm import relationship
 
-from domain.models import FlashcardStatus
-from infrastructure.db import Base
+from ..domain.models import FlashcardStatus
+from .db import Base
 
 
 class Flashcard(Base):
@@ -25,17 +25,14 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
-    password_hash = Column(String)
+    password = Column(String)
     email = Column(String, unique=True, index=True)
-
-    flashcards = relationship("UserFlashcard", back_populates="user")
 
     def to_dict(self):
         return {
             "id": self.id,
             "username": self.username,
             "email": self.email,
-            "flashcards": [uf.to_dict() for uf in self.flashcards]
         }
 
 
@@ -47,7 +44,7 @@ class UserFlashcard(Base):
     flashcard_id = Column(Integer, ForeignKey('flashcards.id'))
     status = Column(Enum(FlashcardStatus), default=FlashcardStatus.TO_STUDY)
 
-    user = relationship("User", back_populates="flashcards")
+    user = relationship("User")
     flashcard = relationship("Flashcard")
 
     def to_dict(self):
