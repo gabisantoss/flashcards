@@ -16,7 +16,7 @@ class LoginRouter(MethodView):
             abort(400, description="Email and password required.")
 
         user = self.repository.get_by_email(data["email"])
-        if not user or not check_password_hash(user.password_hash, data["password"]):
+        if not user or not check_password_hash(user.password, data["password"]):
             abort(401, description="Invalid credentials.")
 
         access_token = create_access_token(identity=user.id)
