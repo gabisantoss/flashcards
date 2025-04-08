@@ -2,12 +2,17 @@ import os
 
 from dotenv import load_dotenv
 
-from extensions import ma
 
 from flask import Flask
 from flask_cors import CORS
 
-from infrastructure.db import Base, engine
+from .routes.flashcard import FlashcardRouter
+from .routes.user import UserRouter
+
+from .infrastructure.db import Base, engine
+
+from .utils.extensions import ma
+
 
 load_dotenv()
 
@@ -19,6 +24,22 @@ origins = os.getenv("CORS_ORIGINS", "").split(",")
 CORS(app, origins=origins)
 
 Base.metadata.create_all(bind=engine)
+
+flashcard_view = FlashcardRouter.as_view('flashcard_api')
+app.add_url_rule(
+    '/flashcards/', view_func=flashcard_view, methods=['GET'])
+app.add_url_rule('/flashcards/', view_func=flashcard_view, methods=['POST'])
+app.add_url_rule('/flashcards/<int:flashcard_id>',
+                 view_func=flashcard_view, methods=['GET', 'PUT', 'DELETE'])
+
+user_view = UserRouter.as_view('user_api')
+app.add_url_rule(
+    '/users/', view_func=user_view, methods=['GET'])
+app.add_url_rule('/users/', view_func=user_view, methods=['POST'])
+app.add_url_rule('/users/<int:record_id>', view_func=user_view,
+                 methods=['GET'])
+app.add_url_rule('/users/<int:user_id>/flashcards/<int:flashcard_id>',
+                 view_func=user_view, methods=['PATCH'])
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,7 +1,8 @@
 from marshmallow import fields, validate
-from extensions import ma
+from marshmallow_enum import EnumField
+from ..utils.extensions import ma
 
-from domain.models import FlashcardStatus
+from ..domain.models import FlashcardStatus
 
 
 class FlashcardCreateSchema(ma.Schema):
@@ -15,23 +16,14 @@ class FlashcardResponseSchema(ma.Schema):
     answer = fields.String()
 
 
-class UserFlashcardResponseSchema(ma.Schema):
-    id = fields.Integer(attribute="flashcard.id")
-    question = fields.String(attribute="flashcard.question")
-    answer = fields.String(attribute="flashcard.answer")
-    status = fields.String(validate=validate.OneOf(
-        [s.value for s in FlashcardStatus]))
-
-
-class UserFlashcardUpdateSchema(ma.Schema):
-    flashcard_id = fields.Integer(required=True)
-    status = fields.String(validate=validate.OneOf(
-        [s.value for s in FlashcardStatus]), required=True)
+class UserFlashcardResponseSchema(FlashcardResponseSchema):
+    status = EnumField(FlashcardStatus, by_value=True)
 
 
 class UserCreateSchema(ma.Schema):
     email = fields.Email(required=True)
-    password = fields.String(required=True, validate=validate.Length(min=6))
+    password = fields.String(
+        required=True, validate=validate.Length(min=6))
     username = fields.String(required=True, validate=validate.Length(min=3))
 
 
