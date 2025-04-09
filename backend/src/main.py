@@ -13,14 +13,14 @@ from .routes.login import LoginRouter
 
 from .infrastructure.db import Base, engine
 
-from .utils.extensions import ma
+from .utils.extensions import ma, jwt_secret_key
 
 
 load_dotenv()
 
 app = Flask(__name__)
 
-app.config["JWT_SECRET_KEY"] = os.getenv('JWT_SECRET_KEY')
+app.config["JWT_SECRET_KEY"] = jwt_secret_key
 app.config["JWT_VERIFY_SUB"] = False
 jwt = JWTManager(app)
 
@@ -42,8 +42,6 @@ user_view = UserRouter.as_view('user_api')
 app.add_url_rule(
     '/users/', view_func=user_view, methods=['GET'])
 app.add_url_rule('/users/', view_func=user_view, methods=['POST'])
-app.add_url_rule('/users/<int:record_id>', view_func=user_view,
-                 methods=['GET'])
 app.add_url_rule('/users/<int:user_id>/flashcards/<int:flashcard_id>',
                  view_func=user_view, methods=['PATCH'])
 
