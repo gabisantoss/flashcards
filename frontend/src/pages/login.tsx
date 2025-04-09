@@ -1,12 +1,19 @@
-import "@/styles/globals.css";
-
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import PageLayout from "@/components/layouts/PageLayout";
 
 export default function LoginPage() {
   const router = useRouter();
 
   const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (router.query.message === "disconnected") {
+      setMessage("Você foi desconectado. Por favor, faça login novamente.");
+    }
+  }, [router.query]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -29,31 +36,45 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-2xl mb-4 font-bold">Login</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-64">
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          className="border p-2"
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          className="border p-2"
-          required
-        />
-        <button
-          className="bg-primary text-white p-2 rounded cursor-pointer"
-          type="submit"
-        >
-          Sign
-        </button>
-        {error && <p className="text-red-600">{error}</p>}
-      </form>
-    </main>
+    <PageLayout>
+      <div className="w-lg m-auto">
+        <h1 className="text-3xl mb-10 text-neutral-700">Welcome back</h1>
+        {message && <div>{message}</div>}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          <div>
+            <h1 className="text-lg text-neutral-700 mb-1">Email</h1>
+            <input
+              type="email"
+              name="email"
+              className="w-full border border-neutral-300 rounded-md p-2 outline-0 placeholder-neutral-500 placeholder:text-xs"
+              required
+            />
+          </div>
+          <div>
+            <h1 className="text-lg text-neutral-700 mb-1">Password</h1>
+            <input
+              type="password"
+              name="password"
+              className="w-full border border-neutral-300 rounded-md p-2 outline-0 placeholder-neutral-500 placeholder:text-xs"
+              required
+            />
+          </div>
+          {error && <p className="text-red-700 text-sm">{error}</p>}
+
+          <button
+            className="bg-black hover:bg-neutral-900 text-white p-2 rounded cursor-pointer"
+            type="submit"
+          >
+            Log In
+          </button>
+          <p className="text-xs text-neutral-500 text-center">
+            Not registered yet?{" "}
+            <a className="font-bold text-violet-800" href="/signup">
+              Create an Account.
+            </a>
+          </p>
+        </form>
+      </div>
+    </PageLayout>
   );
 }

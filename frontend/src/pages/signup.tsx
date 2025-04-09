@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 
+import PageLayout from "@/components/layouts/PageLayout";
+
 export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -27,44 +29,46 @@ export default function SignupPage() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-2xl mb-4 font-bold">Sign-up</h1>
-      <form onSubmit={handleSignup} className="flex flex-col gap-4 w-64">
-        <input
-          type="text"
-          placeholder="Username"
-          className="border p-2"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          className="border p-2"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Senha"
-          className="border p-2"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button
-          className="bg-green-600 text-white p-2 rounded cursor-pointer"
-          type="submit"
-        >
-          Registrar
-        </button>
-        <span className="text-sm text-gray-500">
-          Already has an account?{" "}
-          <a href="/login" className="text-blue-600 hover:underline">
-            Login
-          </a>
-        </span>
-        {error && <p className="text-red-600">{error}</p>}
-      </form>
-    </main>
+    <PageLayout>
+      <main className="w-lg m-auto">
+        <h1 className="text-3xl mb-10 text-neutral-700">Sign Up</h1>
+        <form onSubmit={handleSignup} className="flex flex-col gap-6">
+          <input
+            type="text"
+            placeholder="Username"
+            className="w-full border border-neutral-300 rounded-md p-2 outline-0 placeholder-neutral-500 placeholder:text-xs"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full border border-neutral-300 rounded-md p-2 outline-0 placeholder-neutral-500 placeholder:text-xs"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Senha"
+            className="w-full border border-neutral-300 rounded-md p-2 outline-0 placeholder-neutral-500 placeholder:text-xs"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+            className="bg-black hover:bg-neutral-900 text-white p-2 rounded cursor-pointer"
+            type="submit"
+          >
+            Registrar
+          </button>
+          <p className="text-xs text-neutral-500 text-center">
+            Already has an account?{" "}
+            <a href="/login" className="font-bold text-violet-800">
+              Login.
+            </a>
+          </p>
+          {error && <p className="text-red-600">{error}</p>}
+        </form>
+      </main>
+    </PageLayout>
   );
 }
