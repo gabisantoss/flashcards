@@ -9,3 +9,18 @@ body {
   color: var(--foreground);
   font-family: Inter, sans-serif;
 }
+
+.slick-prev:before,
+.slick-next:before {
+  font-size: 40px !important;
+  color: var(--foreground) !important;
+}
+
+.slick-prev {
+  left: 3% !important;
+  z-index: 1;
+}
+.slick-next {
+  right: 3% !important;
+  z-index: 1;
+}

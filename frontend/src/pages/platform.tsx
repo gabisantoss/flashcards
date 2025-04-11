@@ -25,8 +25,10 @@ export default function PlatformPage() {
   }
 
   return (
-    <PlatformLayout>
-      <FlashcardCarousel flashcards={flashcards} />
-    </PlatformLayout>
+    flashcards && (
+      <PlatformLayout>
+        <FlashcardCarousel flashcards={flashcards} />
+      </PlatformLayout>
+    )
   );
 }

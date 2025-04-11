@@ -5,7 +5,17 @@ import Slider from "react-slick";
 import Flashcard from "./Flashcard";
 import { IFlashcard } from "../hooks/useFlashcards";
 
-function Arrow(props) {
+interface IFlashcardCarouselProps {
+  flashcards: IFlashcard[];
+}
+
+interface IArrow {
+  className?: string;
+  style?: React.CSSProperties;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
+}
+
+function Arrow(props: IArrow) {
   const { className, style, onClick } = props;
   return (
     <div
@@ -22,16 +32,20 @@ function Arrow(props) {
   );
 }
 
-const FlashcardCarousel: React.FC<IFlashcard[]> = ({ flashcards }) => {
+const FlashcardCarousel: React.FC<IFlashcardCarouselProps> = ({
+  flashcards,
+}) => {
   const settings = {
     dots: true,
     speed: 500,
     slidesToShow: 1,
     infinite: false,
+    nextArrow: <Arrow />,
+    prevArrow: <Arrow />,
   };
   return (
     <Slider {...settings}>
-      {flashcards.map((flashcard) => {
+      {flashcards.map((flashcard: IFlashcard) => {
         console.log(flashcard);
         return <Flashcard key={flashcard.id} flashcard={flashcard} />;
       })}
