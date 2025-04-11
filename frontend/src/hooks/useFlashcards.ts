@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios, { AxiosError } from "axios";
 
 export interface IFlashcard {
   id: number;
@@ -23,31 +24,36 @@ export const useFlashcards = () => {
       setError(null);
 
       try {
-        const response = await fetch("/api/flashcards");
-        const data = await response.json();
+        const response = await axios.get("/api/flashcards");
+        setFlashcards(response.data.flashcards);
+      } catch (error: unknown) {
+        if (error instanceof AxiosError) {
+          const response = error.response;
 
-        if (!response.ok) {
-          const errorMessage = data["error"];
-
+          if (response) {
+            if (response.data.redirect) {
+              window.location.href = response.data.location;
+            }
+            const errorMessage =
+              response.data.error || "An unexpected error occurred.";
+            setError({
+              code: response.status,
+              message: errorMessage,
+            });
+          } else {
+            setError({
+              code: 500,
+              message:
+                "There was an issue connecting to the server. Please try again later.",
+            });
+          }
+        } else {
+          console.error("Unexpected error:", error);
           setError({
-            code: response.status,
-            message:
-              errorMessage ||
-              "An unexpected error occurred while fetching flashcards.",
+            code: 500,
+            message: "There was an unexpected error. Please try again later.",
           });
-
-          return;
         }
-
-        const flashcards = data["flashcards"] as IFlashcard[];
-        setFlashcards(flashcards);
-      } catch (error) {
-        console.error("Error fetching flashcards:", JSON.stringify(error));
-        setError({
-          code: 500,
-          message:
-            "There was an issue connecting to the server. Please try again later.",
-        });
       } finally {
         setLoading(false);
       }
