@@ -35,14 +35,11 @@ flashcard_view = FlashcardRouter.as_view('flashcard_api')
 app.add_url_rule(
     '/flashcards/', view_func=flashcard_view, methods=['GET'])
 app.add_url_rule('/flashcards/', view_func=flashcard_view, methods=['POST'])
-app.add_url_rule('/flashcards/<int:flashcard_id>',
-                 view_func=flashcard_view, methods=['GET', 'PUT', 'DELETE'])
 
 user_view = UserRouter.as_view('user_api')
 app.add_url_rule(
     '/users/', view_func=user_view, methods=['GET'])
-app.add_url_rule('/users/', view_func=user_view, methods=['POST'])
-app.add_url_rule('/users/<int:user_id>/flashcards/<int:flashcard_id>',
+app.add_url_rule('/users/flashcards/<int:flashcard_id>',
                  view_func=user_view, methods=['PATCH'])
 
 login_view = LoginRouter.as_view('login_api')
