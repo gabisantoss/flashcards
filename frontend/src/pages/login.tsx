@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import PageLayout from "@/components/layouts/PageLayout";
+import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -38,8 +39,13 @@ export default function LoginPage() {
   return (
     <PageLayout>
       <div className="w-lg m-auto">
-        <h1 className="text-3xl mb-10 text-neutral-700">Welcome back</h1>
-        {message && <div>{message}</div>}
+        {message && (
+          <div className="text-center text-sm mb-10 font-semibold text-neutral-700">
+            {message}
+          </div>
+        )}
+
+        <h1 className="text-3xl mb-4 text-neutral-700">Welcome back</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <div>
             <h1 className="text-lg text-neutral-700 mb-1">Email</h1>
@@ -69,9 +75,9 @@ export default function LoginPage() {
           </button>
           <p className="text-xs text-neutral-500 text-center">
             Not registered yet?{" "}
-            <a className="font-bold text-violet-800" href="/signup">
+            <Link className="font-bold text-violet-800" href="/signup">
               Create an Account.
-            </a>
+            </Link>
           </p>
         </form>
       </div>

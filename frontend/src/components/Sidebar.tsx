@@ -9,7 +9,7 @@ const Sidebar: React.FC = () => {
     {
       name: "Study",
       url: "/",
-      icon: <FlashcardsIcon size={32} />,
+      icon: <FlashcardsIcon />,
       isActive: true,
       onClick: () => {},
     },

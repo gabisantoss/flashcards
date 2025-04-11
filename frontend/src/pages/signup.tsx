@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 import PageLayout from "@/components/layouts/PageLayout";
+import Link from "next/link";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
@@ -62,9 +63,9 @@ export default function SignupPage() {
           </button>
           <p className="text-xs text-neutral-500 text-center">
             Already has an account?{" "}
-            <a href="/login" className="font-bold text-violet-800">
+            <Link href="/login" className="font-bold text-violet-800">
               Login.
-            </a>
+            </Link>
           </p>
           {error && <p className="text-red-600">{error}</p>}
         </form>
