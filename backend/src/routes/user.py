@@ -4,6 +4,8 @@ from flask import request, jsonify
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask.views import MethodView
 
+from marshmallow import ValidationError
+
 from ..infrastructure.repositories.user import UserRepository
 from .schemas import UserCreateSchema, UserResponseSchema
 from ..domain.models import FlashcardStatus
@@ -37,6 +39,21 @@ class UserRouter(MethodView):
         if user_id:
             return self._get_item(user_id)
         return self.many_response_schema.jsonify(self.repository.get_all())
+
+    def post(self):
+        json_data = request.get_json()
+        if not json_data:
+            return jsonify({"message": "Missing user body data."}), 400
+
+        try:
+            user_data = self.create_schema.load(json_data)
+            user = self.repository.add(**user_data)
+        except ValidationError as err:
+            return jsonify(err.messages), 400
+        except Exception as e:
+            return jsonify({"message": f"Invalid data: {e}"}), 400
+
+        return self.response_schema.jsonify(user), 201
 
     def patch(self, flashcard_id):
         try:

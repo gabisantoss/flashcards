@@ -38,7 +38,7 @@ app.add_url_rule('/flashcards/', view_func=flashcard_view, methods=['POST'])
 
 user_view = UserRouter.as_view('user_api')
 app.add_url_rule(
-    '/users/', view_func=user_view, methods=['GET'])
+    '/users/', view_func=user_view, methods=['GET', 'POST'])
 app.add_url_rule('/users/flashcards/<int:flashcard_id>',
                  view_func=user_view, methods=['PATCH'])
 
