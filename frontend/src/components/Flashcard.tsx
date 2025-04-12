@@ -39,7 +39,12 @@ const Flashcard: React.FC<FlashcardProps> = ({ key, flashcard }) => {
           }`}
         >
           <div className={`text-center ${flip ? "hidden" : "block"}`}>
-            {flashcard.question}
+            <p
+              className="flex flex-col items-center"
+              dangerouslySetInnerHTML={{
+                __html: flashcard.question,
+              }}
+            />
           </div>
           <div className={`text-center ${flip ? "block" : "hidden"}`}>
             {flashcard.answer}
