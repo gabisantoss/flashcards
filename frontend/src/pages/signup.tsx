@@ -22,7 +22,7 @@ export default function SignupPage() {
     });
 
     if (!res.ok) {
-      setError("Erro ao registrar usuário");
+      setError("Error registering user. Please try again later.");
       return;
     }
 
@@ -67,7 +67,7 @@ export default function SignupPage() {
               Login.
             </Link>
           </p>
-          {error && <p className="text-red-600">{error}</p>}
+          {error && <p className="text-red-600 text-sm font-bold">{error}</p>}
         </form>
       </main>
     </PageLayout>

@@ -45,10 +45,9 @@ const FlashcardCarousel: React.FC<IFlashcardCarouselProps> = ({
   };
   return (
     <Slider {...settings}>
-      {flashcards.map((flashcard: IFlashcard) => {
-        console.log(flashcard);
-        return <Flashcard key={flashcard.id} flashcard={flashcard} />;
-      })}
+      {flashcards.map((flashcard: IFlashcard) => (
+        <Flashcard key={flashcard.id} flashcard={flashcard} />
+      ))}
     </Slider>
   );
 };

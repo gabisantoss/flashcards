@@ -12,7 +12,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (router.query.message === "disconnected") {
-      setMessage("Você foi desconectado. Por favor, faça login novamente.");
+      setMessage("You have been logged out. Please log in again.");
     }
   }, [router.query]);
 
@@ -65,7 +65,7 @@ export default function LoginPage() {
               required
             />
           </div>
-          {error && <p className="text-red-700 text-sm">{error}</p>}
+          {error && <p className="text-red-600 text-sm">{error}</p>}
 
           <button
             className="bg-black hover:bg-neutral-900 text-white p-2 rounded cursor-pointer"

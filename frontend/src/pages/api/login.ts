@@ -9,7 +9,7 @@ export default async function handler(
 
   const { email, password } = req.body;
 
-  const url = process.env.FLASK_API_URL;
+  const url = process.env.NEXT_PUBLIC_FLASK_API_URL;
 
   try {
     const flaskRes = await fetch(`${url}/login/`, {
@@ -19,7 +19,7 @@ export default async function handler(
     });
 
     if (!flaskRes.ok)
-      return res.status(401).json({ message: "Credenciais inválidas" });
+      return res.status(401).json({ message: "Invalid credentials." });
 
     const { access_token } = await flaskRes.json();
 
@@ -33,9 +33,12 @@ export default async function handler(
       })
     );
 
-    res.status(200).json({ message: "Autenticado com sucesso" });
+    res.status(200).json({ message: "Authenticated successfully." });
   } catch (error) {
-    console.error("Erro ao autenticar:", error);
-    res.status(500).json({ message: "Erro ao autenticar" });
+    console.error("Error authenticating:", error);
+    res.status(500).json({
+      message:
+        "An error occurred while authenticating the user. Please try again later.",
+    });
   }
 }

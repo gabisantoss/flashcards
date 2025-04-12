@@ -8,9 +8,7 @@ export default async function handler(
 
   const { email, username, password } = req.body;
 
-  const url = process.env.FLASK_API_URL;
-
-  console.log(url);
+  const url = process.env.NEXT_PUBLIC_FLASK_API_URL;
 
   try {
     const flaskRes = await fetch(`${url}/users/`, {
@@ -20,10 +18,16 @@ export default async function handler(
     });
 
     if (!flaskRes.ok)
-      return res.status(400).json({ message: "Erro ao registrar" });
+      return res.status(400).json({
+        message:
+          "An error occurred while trying to register the user. Please try again later.",
+      });
 
-    res.status(200).json({ message: "Usuário registrado" });
+    res.status(200).json({ message: "User registered successfully!" });
   } catch {
-    res.status(500).json({ message: "Erro interno" });
+    res.status(500).json({
+      message:
+        "An error occurred while trying to register the user. Please try again later.",
+    });
   }
 }

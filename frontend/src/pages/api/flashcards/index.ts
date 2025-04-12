@@ -20,7 +20,7 @@ export default async function handler(
       .json({ error: "You need to be authenticated to access the platform." });
   }
 
-  const url = process.env.FLASK_API_URL;
+  const url = process.env.NEXT_PUBLIC_FLASK_API_URL;
 
   try {
     const flaskRes = await axios.get(`${url}/users/`, {
@@ -52,11 +52,16 @@ export default async function handler(
           });
         }
         return res.status(response.status).json({
-          error: response.data?.message || "Failed to retrieve data.",
+          error:
+            response.data?.message ||
+            "An error occurred while trying to fetch the flashcards.",
         });
       }
     }
 
-    return res.status(500).json({ error: "Internal server error." });
+    return res.status(500).json({
+      error:
+        "An error occurred while trying to register the user. Please try again later.",
+    });
   }
 }

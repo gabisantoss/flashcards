@@ -21,7 +21,7 @@ export default async function handler(
       .json({ error: "You need to be authenticated to update the flashcard." });
   }
 
-  const url = process.env.FLASK_API_URL;
+  const url = process.env.NEXT_PUBLIC_FLASK_API_URL;
 
   try {
     await axios.patch(`${url}/users/flashcards/${id}`, req.body, {
@@ -57,6 +57,11 @@ export default async function handler(
       }
     }
 
-    return res.status(500).json({ error: "Internal server error." });
+    return res
+      .status(500)
+      .json({
+        error:
+          "An error occurred while trying to register the user. Please try again later.",
+      });
   }
 }
