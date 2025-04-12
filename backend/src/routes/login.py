@@ -7,8 +7,8 @@ from ..infrastructure.repositories.user import UserRepository
 
 
 class LoginRouter(MethodView):
-    def __init__(self):
-        self.repository = UserRepository()
+    def __init__(self, user_repository_factory):
+        self.repository = user_repository_factory()
 
     def post(self):
         data = request.get_json()

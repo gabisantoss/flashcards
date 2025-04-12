@@ -1,13 +1,12 @@
 from sqlalchemy.orm import Session
-from ..db import SessionLocal
 
 from ..models import Flashcard
 from ..models import UserFlashcard
 
 
 class FlashcardRepository:
-    def __init__(self):
-        self.db: Session = SessionLocal()
+    def __init__(self, db_session):
+        self.db = db_session
 
     def get_all(self):
         return self.db.query(Flashcard).all()

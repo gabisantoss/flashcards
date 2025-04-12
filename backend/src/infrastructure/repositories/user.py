@@ -1,23 +1,24 @@
 from sqlalchemy.orm import aliased
 from sqlalchemy import func
-from sqlalchemy.orm import Session
 
 from werkzeug.security import generate_password_hash
 
-from ..db import SessionLocal
 from ..models import User, Flashcard
 from ..models import UserFlashcard
 
 
 class UserRepository:
-    def __init__(self):
-        self.db: Session = SessionLocal()
+    def __init__(self, db_session):
+        self.db = db_session
 
     def get_all(self):
         return self.db.query(User).all()
 
     def get_by_id(self, user_id: int):
         db_user = self.db.query(User).filter_by(id=user_id).first()
+
+        if db_user is None:
+            return None
 
         user_flashcard_alias = aliased(UserFlashcard)
 

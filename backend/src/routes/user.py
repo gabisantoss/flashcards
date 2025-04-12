@@ -14,8 +14,8 @@ from ..domain.models import FlashcardStatus
 class UserRouter(MethodView):
     decorators = [jwt_required(optional=True)]
 
-    def __init__(self):
-        self.repository = UserRepository()
+    def __init__(self, user_repository_factory):
+        self.repository = user_repository_factory()
         self.create_schema = UserCreateSchema()
         self.response_schema = UserResponseSchema()
         self.many_response_schema = UserResponseSchema(many=True)

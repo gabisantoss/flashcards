@@ -8,8 +8,8 @@ from ..routes.schemas import FlashcardCreateSchema, FlashcardResponseSchema
 
 
 class FlashcardRouter(MethodView):
-    def __init__(self):
-        self.repository = FlashcardRepository()
+    def __init__(self, flashcard_repository_factory):
+        self.repository = flashcard_repository_factory()
         self.create_schema = FlashcardCreateSchema()
         self.response_schema = FlashcardResponseSchema()
         self.many_response_schema = FlashcardResponseSchema(many=True)
