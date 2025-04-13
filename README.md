@@ -67,6 +67,11 @@ We’d like you to include at least **basic automated tests** for your backend l
 
 > Bonus for using mocks/stubs and covering edge cases — but keep it simple and clean.
 
+#### Running tests
+```
+cd backend
+pytest
+```
 ---
 
 ## 🧪 What We'll Evaluate
