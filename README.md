@@ -144,9 +144,9 @@ We’re happy to help!
 
 If you’re managing the challenge repo, don’t forget to:
 
-- [ ] Create a private GitHub repository (e.g., `rdmedicine-flashcards-challenge`)
-- [ ] Add `thiagopmaffeid@gmail.com` as a **collaborator**
-- [ ] Paste this `README.md` as the root documentation
+- [x] Create a private GitHub repository (e.g., `rdmedicine-flashcards-challenge`)
+- [x] Add `thiagopmaffeid@gmail.com` as a **collaborator**
+- [x] Paste this `README.md` as the root documentation
 
 ---
 
