@@ -4,7 +4,7 @@ export interface SidebarItemProps {
   name: string;
   url: string;
   icon?: React.ReactNode;
-  isActive: boolean;
+  isActive?: boolean;
   onClick: (url: string) => void;
 }
 

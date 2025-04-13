@@ -4,44 +4,33 @@ import SidebarItem, { SidebarItemProps } from "./SidebarItem";
 import DashboardIcon from "./icons/DashboardIcon";
 import ExitIcon from "./icons/ExitIcon";
 import FlashcardsIcon from "./icons/FlashcardsIcon";
-import { useState } from "react";
 import StatsIcon from "./icons/StatsIcon";
 
 const Sidebar: React.FC = () => {
   const router = useRouter();
 
-  const linksDefaultValue: SidebarItemProps[] = [
+  const links: SidebarItemProps[] = [
     {
       name: "Study",
       url: "/",
       icon: <FlashcardsIcon />,
-      isActive: true,
       onClick: () => {},
     },
     {
       name: "Dashboard",
       url: "/dashboard",
       icon: <DashboardIcon />,
-      isActive: false,
       onClick: () => {},
     },
     {
       name: "Stats",
       url: "/stats",
       icon: <StatsIcon />,
-      isActive: false,
       onClick: () => {},
     },
   ];
-  const [links, setLinks] = useState(linksDefaultValue);
 
   const handleLinkClick = (url: string) => {
-    const updatedLinks = links.map((link: SidebarItemProps) =>
-      link.url === url
-        ? { ...link, isActive: true }
-        : { ...link, isActive: false }
-    );
-    setLinks(updatedLinks);
     router.push(url);
   };
 
@@ -54,7 +43,7 @@ const Sidebar: React.FC = () => {
             name={link.name}
             url={link.url}
             icon={link.icon}
-            isActive={link.isActive}
+            isActive={router.pathname === link.url}
             onClick={() => handleLinkClick(link.url)}
           />
         ))}
