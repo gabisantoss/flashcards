@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+
 import SidebarItem, { SidebarItemProps } from "./SidebarItem";
 import DashboardIcon from "./icons/DashboardIcon";
 import ExitIcon from "./icons/ExitIcon";
@@ -5,6 +7,8 @@ import FlashcardsIcon from "./icons/FlashcardsIcon";
 import { useState } from "react";
 
 const Sidebar: React.FC = () => {
+  const router = useRouter();
+
   const linksDefaultValue: SidebarItemProps[] = [
     {
       name: "Study",
@@ -30,6 +34,7 @@ const Sidebar: React.FC = () => {
         : { ...link, isActive: false }
     );
     setLinks(updatedLinks);
+    router.push(url);
   };
 
   return (
