@@ -35,7 +35,6 @@ export default async function handler(
     if (error instanceof AxiosError) {
       const response = error.response;
 
-      console.log(response?.data.message);
       if (response) {
         if (
           response.data?.message &&
