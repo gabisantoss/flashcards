@@ -4,10 +4,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Flashcard from "./Flashcard";
 import { IFlashcard } from "../hooks/useFlashcards";
-
-interface IFlashcardCarouselProps {
-  flashcards: IFlashcard[];
-}
+import { useFlashcardContext } from "@/context/FlashcardContext";
 
 interface IArrow {
   className?: string;
@@ -32,9 +29,9 @@ function Arrow(props: IArrow) {
   );
 }
 
-const FlashcardCarousel: React.FC<IFlashcardCarouselProps> = ({
-  flashcards,
-}) => {
+const FlashcardCarousel: React.FC = () => {
+  const { flashcards } = useFlashcardContext();
+
   const settings = {
     dots: true,
     speed: 500,

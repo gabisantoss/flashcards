@@ -15,7 +15,7 @@ const Sidebar: React.FC = () => {
     },
     {
       name: "Dashboard",
-      url: "/dash",
+      url: "/dashboard",
       icon: <DashboardIcon />,
       isActive: false,
       onClick: () => {},
