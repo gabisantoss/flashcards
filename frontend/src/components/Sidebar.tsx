@@ -5,6 +5,7 @@ import DashboardIcon from "./icons/DashboardIcon";
 import ExitIcon from "./icons/ExitIcon";
 import FlashcardsIcon from "./icons/FlashcardsIcon";
 import { useState } from "react";
+import StatsIcon from "./icons/StatsIcon";
 
 const Sidebar: React.FC = () => {
   const router = useRouter();
@@ -21,6 +22,13 @@ const Sidebar: React.FC = () => {
       name: "Dashboard",
       url: "/dashboard",
       icon: <DashboardIcon />,
+      isActive: false,
+      onClick: () => {},
+    },
+    {
+      name: "Stats",
+      url: "/stats",
+      icon: <StatsIcon />,
       isActive: false,
       onClick: () => {},
     },
