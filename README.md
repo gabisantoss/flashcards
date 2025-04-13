@@ -1,3 +1,14 @@
+## Running the application
+```
+docker-compose up --build
+```
+
+## Running tests
+```
+cd backend
+pytest
+```
+
 # 🧠 RD Medicine Flashcards App Challenge
 
 Welcome to the technical challenge! We're excited to see how you think, build, and design.
